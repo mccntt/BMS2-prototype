@@ -109,9 +109,11 @@ export const Edit = () => {
           <Title level={5}>
             <Space>
               Base Info
-              <Link to="/editBase">
-                <EditOutlined />
-              </Link>
+              <Tooltip title="Change customer info">
+                <Link to="/editBase">
+                  <EditOutlined />
+                </Link>
+              </Tooltip>
             </Space>
           </Title>
         </Divider>
