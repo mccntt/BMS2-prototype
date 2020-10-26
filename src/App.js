@@ -12,6 +12,8 @@ import {
   Space,
   Input,
   Divider,
+  Modal,
+  Radio
 } from "antd";
 import {
   UserOutlined,
@@ -19,10 +21,10 @@ import {
   NotificationOutlined,
   SyncOutlined,
 } from "@ant-design/icons";
-import React from "react";
-import { Create, EditBase } from "./Create";
-import { Edit } from "./Edit"
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Create, EditBase, EditBaseWithCompanyCreation } from "./Create";
+import { Edit } from "./Edit";
+import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -93,6 +95,9 @@ export default function App() {
               </Route>
               <Route path="/editBase" exact>
                 <EditBase />
+              </Route>
+              <Route path="/editBaseWithCompany" exact>
+                <EditBaseWithCompanyCreation />
               </Route>
             </Switch>
           </Layout>
@@ -206,6 +211,9 @@ const QList = () => {
 };
 
 const ListPage = () => {
+  const [displayModal, setDisplayModal] = useState(false);
+  const history = useHistory()
+
   return (
     <>
       <Breadcrumb style={{ margin: "16px 0" }}>
@@ -232,9 +240,16 @@ const ListPage = () => {
               <Tooltip title="refresh">
                 <Button icon={<SyncOutlined />} />
               </Tooltip>
-              <Link to="/create">
-                <Button type="primary">Create</Button>
-              </Link>
+              {/* <Link to="/create"> */}
+              <Button
+                type="primary"
+                onClick={() => {
+                  setDisplayModal(true);
+                }}
+              >
+                Create
+              </Button>
+              {/* </Link> */}
             </Space>
           </Col>
         </Row>
@@ -255,6 +270,23 @@ const ListPage = () => {
             <QList />
           </Col>
         </Row>
+        <Modal
+          title="Create Quotation"
+          visible={displayModal}
+          onOk={() => {
+            setDisplayModal(false);
+            history.push("/edit");
+          }}
+          onCancel={() => {
+            setDisplayModal(false);
+          }}
+        >
+          <Radio.Group>
+            <Radio value="USD">简体中文</Radio>
+            <Radio value="CNY">繁体中文</Radio>
+            <Radio value="HKD">English</Radio>
+          </Radio.Group>
+        </Modal>
       </Content>
     </>
   );

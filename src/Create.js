@@ -15,6 +15,7 @@ import {
 } from "antd";
 import { MailOutlined, BankOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import Modal from "antd/lib/modal/Modal";
 
 const { Title, Text } = Typography;
 const { Content } = Layout;
@@ -177,13 +178,6 @@ const ChangeBasicInfoForm = ({ text }) => {
           <Radio value="NTD">NTD</Radio>
         </Radio.Group>
       </Form.Item>
-      <Form.Item label="Language" name="language" rules={[{ required: true }]}>
-        <Radio.Group>
-          <Radio value="USD">简体中文</Radio>
-          <Radio value="CNY">繁体中文</Radio>
-          <Radio value="HKD">English</Radio>
-        </Radio.Group>
-      </Form.Item>
       <Form.Item {...tailLayout}>
         <Link to="/edit">
           <Button type="primary" htmlType="submit">
@@ -225,6 +219,50 @@ export const EditBase = () => {
           </Col>
         </Row>
       </Content>
+    </>
+  );
+};
+
+export const EditBaseWithCompanyCreation = () => {
+  return (
+    <>
+      <Breadcrumb style={{ margin: "16px 0" }}>
+        <Breadcrumb.Item>BMS2</Breadcrumb.Item>
+        <Breadcrumb.Item>Quotation</Breadcrumb.Item>
+        <Breadcrumb.Item>
+          <Link to="/edit">HKQ20200826-06-22 </Link>
+        </Breadcrumb.Item>
+      </Breadcrumb>
+      <Content
+        className="site-layout-background"
+        style={{
+          padding: 24,
+          margin: 0,
+          minHeight: 280,
+        }}
+      >
+        <Row type="flex">
+          <Col span={8} offset={8}>
+            <Title level={3}>Edit Base Info</Title>
+          </Col>
+        </Row>
+        <Divider />
+        <Row>
+          <Col span={12} offset={2}>
+            <ChangeBasicInfoForm text="Save" />
+          </Col>
+        </Row>
+      </Content>
+      <Modal
+        title="Create Quotation"
+        visible={true}
+        onOk={() => {
+          console.log("ok");
+        }}
+        onCancel={() => {
+          console.log("cancel");
+        }}
+      ></Modal>
     </>
   );
 };

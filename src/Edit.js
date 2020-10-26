@@ -16,9 +16,13 @@ import {
   Badge,
   Table,
   Tooltip,
+  Dropdown,
+  Menu,
+  Popconfirm,
 } from "antd";
 import { Link, useHistory } from "react-router-dom";
 import {
+  CopyOutlined,
   EditOutlined,
   MinusCircleOutlined,
   RollbackOutlined,
@@ -95,8 +99,13 @@ export const Edit = () => {
           <Col span={8}>
             <Space style={{ float: "right" }}>
               <Button>Preview</Button>
-              <Button type="primary">Save</Button>
               <Button disabled>Submit</Button>
+              <Button type="primary">Save</Button>
+              <Tooltip>
+                <Popconfirm title="confirm copy?">
+                  <Button icon={<CopyOutlined />}></Button>
+                </Popconfirm>
+              </Tooltip>
               <Tooltip title="Back to List">
                 <Link to="/quotations">
                   <Button icon={<RollbackOutlined />}></Button>
