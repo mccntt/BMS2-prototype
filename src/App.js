@@ -13,18 +13,28 @@ import {
   Input,
   Divider,
   Modal,
-  Radio
+  Radio,
 } from "antd";
 import {
   UserOutlined,
   LaptopOutlined,
   NotificationOutlined,
   SyncOutlined,
+  CopyOutlined,
+  FileSearchOutlined,
+  EditOutlined,
 } from "@ant-design/icons";
 import React, { useState } from "react";
 import { Create, EditBase, EditBaseWithCompanyCreation } from "./Create";
 import { Edit } from "./Edit";
-import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useHistory,
+} from "react-router-dom";
+import { EditWithCompanyCreation } from "./CompanyCreation";
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -97,7 +107,7 @@ export default function App() {
                 <EditBase />
               </Route>
               <Route path="/editBaseWithCompany" exact>
-                <EditBaseWithCompanyCreation />
+                <EditWithCompanyCreation />
               </Route>
             </Switch>
           </Layout>
@@ -182,7 +192,25 @@ const QList = () => {
 
     return (
       // eslint-disable-next-line
-      <List.Item actions={[<Link to="/edit">edit</Link>]}>
+      <List.Item
+        actions={[
+          <Tooltip title="Edit">
+            <Link to="/edit">
+              <EditOutlined />
+            </Link>
+          </Tooltip>,
+          <Tooltip title="Copy">
+            <a href="#">
+              <CopyOutlined />
+            </a>
+          </Tooltip>,
+          <Tooltip title="Preview">
+            <a href="#">
+              <FileSearchOutlined />
+            </a>
+          </Tooltip>,
+        ]}
+      >
         <List.Item.Meta
           // eslint-disable-next-line
           title={<Link to="/edit">{item.number}</Link>}
@@ -212,7 +240,7 @@ const QList = () => {
 
 const ListPage = () => {
   const [displayModal, setDisplayModal] = useState(false);
-  const history = useHistory()
+  const history = useHistory();
 
   return (
     <>

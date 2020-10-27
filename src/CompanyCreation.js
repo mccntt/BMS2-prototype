@@ -20,6 +20,7 @@ import {
   Menu,
   Popconfirm,
   Drawer,
+  Collapse,
 } from "antd";
 import { Link, useHistory } from "react-router-dom";
 import {
@@ -27,12 +28,15 @@ import {
   EditOutlined,
   MinusCircleOutlined,
   RollbackOutlined,
+  PlusOutlined,
 } from "@ant-design/icons";
 import { List } from "antd/lib/form/Form";
 import { ChangeBasicInfoForm } from "./Create";
+import Modal from "antd/lib/modal/Modal";
 
 const { Title, Text } = Typography;
 const { Content } = Layout;
+const { Panel } = Collapse;
 
 const products = [
   {
@@ -75,9 +79,35 @@ const terms = [
   "Price quoted above assume all delivery and installation are in HK and within normal office Hour.",
 ];
 
-export const Edit = () => {
+export const EditWithCompanyCreation = () => {
   const history = useHistory();
-  const [displayDrawer, setDisplayDrawer] = useState(false);
+  const layout = {
+    labelCol: { span: 8 },
+    wrapperCol: { span: 16 },
+  };
+  const contactLayout = {
+    labelCol: { span: 24 },
+    wrapperCol: { span: 24 },
+  };
+  const contactLayoutWithoutLabel = {
+    wrapperCol: { span: 24 },
+  };
+  const formItemLayoutWithOutLabel = {
+    wrapperCol: {
+      offset: 8,
+      span: 16,
+    },
+  };
+  const formItemLayout = {
+    labelCol: {
+      xs: { span: 24 },
+      sm: { span: 4 },
+    },
+    wrapperCol: {
+      xs: { span: 24 },
+      sm: { span: 20 },
+    },
+  };
   return (
     <>
       <Breadcrumb style={{ margin: "16px 0" }}>
@@ -120,13 +150,9 @@ export const Edit = () => {
         <Divider orientation="left">
           <Title level={5}>
             <Space>
-              Basic
+              Base Info
               <Tooltip title="Change customer info">
-                <EditOutlined
-                  onClick={() => {
-                    setDisplayDrawer(true);
-                  }}
-                />
+                <EditOutlined />
               </Tooltip>
             </Space>
           </Title>
@@ -231,15 +257,15 @@ export const Edit = () => {
         <Drawer
           title="Edit Base Info"
           onClose={() => {
-            setDisplayDrawer(false);
+            // setDisplayDrawer(false);
             console.log("drawer closed");
           }}
           onOk={() => {
-            setDisplayDrawer(false);
+            // setDisplayDrawer(false);
             console.log("drawer ok");
           }}
           width={640}
-          visible={displayDrawer}
+          visible={true}
           footer={
             <div
               style={{
@@ -248,7 +274,7 @@ export const Edit = () => {
             >
               <Button
                 onClick={() => {
-                  setDisplayDrawer(false);
+                  //   setDisplayDrawer(false);
                   console.log("drawer closed");
                 }}
                 style={{ marginRight: 8 }}
@@ -257,7 +283,7 @@ export const Edit = () => {
               </Button>
               <Button
                 onClick={() => {
-                  setDisplayDrawer(false);
+                  //   setDisplayDrawer(false);
                   console.log("drawer ok");
                 }}
                 type="primary"
@@ -273,6 +299,141 @@ export const Edit = () => {
             </Col>
           </Row>
         </Drawer>
+        <Modal
+          visible={true}
+          title="Create Company Profile"
+          onOk={() => {
+            console.log("ok");
+          }}
+        >
+          <Form
+            {...layout}
+            name="basic"
+            onFinish={() => {
+              console.log("finished");
+            }}
+            onFinishFailed={() => {
+              console.log("finish failed");
+            }}
+            initialValues={{
+              addresses: [""],
+              contacts: [
+                {
+                  name: "",
+                  email: "",
+                },
+              ],
+            }}
+          >
+            <Form.Item
+              label="Company Name"
+              name="companyName"
+              rules={[{ required: true }]}
+            >
+              <Input />
+            </Form.Item>
+
+            <Form.Item
+              label="Company Domain"
+              name="companyDomain"
+              rules={[{ required: true }]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.List name="addresses">
+              {(fields, { add, remove }, { errors }) => {
+                return (
+                  <>
+                    {fields.map((field, index) => (
+                      <Form.Item
+                        {...(index === 0 ? layout : formItemLayoutWithOutLabel)}
+                        label={index === 0 ? "Company Addresses" : ""}
+                        key={field.key}
+                      >
+                        <Space style={{ width: "100%" }}>
+                          <Form.Item {...field} noStyle>
+                            <Input placeholder="address" />
+                          </Form.Item>
+                          {fields.length > 1 && index !== 0 ? (
+                            <MinusCircleOutlined
+                              className="dynamic-delete-button"
+                              onClick={() => remove(field.name)}
+                            />
+                          ) : null}
+                          {index === 0 ? (
+                            <Form.Item noStyle>
+                              <Button
+                                type="dashed"
+                                onClick={() => add()}
+                                // style={{ width: "60%" }}
+                                icon={<PlusOutlined />}
+                              />
+                            </Form.Item>
+                          ) : null}
+                        </Space>
+                      </Form.Item>
+                    ))}
+                  </>
+                );
+              }}
+            </Form.List>
+            <Collapse bordered={false} ghost>
+              <Panel header="Contacts">
+                <Form.List name="contacts">
+                  {(fields, { add, remove }, { errors }) => {
+                    return (
+                      <>
+                        {fields.map((field, index) => (
+                          <Form.Item
+                            {...layout}
+                            // label={index === 0 ? "Contacts" : ""}
+                            key={field.key}
+                          >
+                            <Space style={{ width: "100%" }}>
+                              <Form.Item
+                                {...field}
+                                {...contactLayout}
+                                name={[field.name, "name"]}
+                                fieldKey={[field.fieldKey, "name"]}
+                                noStyle
+                              >
+                                <Input placeholder="name" />
+                              </Form.Item>
+                              <Form.Item
+                                {...field}
+                                name={[field.name, "email"]}
+                                fieldKey={[field.fieldKey, "email"]}
+                                noStyle
+                              >
+                                <Input placeholder="email" />
+                              </Form.Item>
+                              {fields.length > 1 && index !== 0 ? (
+                                <MinusCircleOutlined
+                                  className="dynamic-delete-button"
+                                  onClick={() => remove(field.name)}
+                                />
+                              ) : null}
+                              {index === 0 ? (
+                                <Form.Item noStyle>
+                                  <Button
+                                    type="dashed"
+                                    onClick={() => add()}
+                                    // style={{ width: "60%" }}
+                                    icon={<PlusOutlined />}
+                                  />
+                                </Form.Item>
+                              ) : null}
+                            </Space>
+                          </Form.Item>
+                        ))}
+                      </>
+                    );
+                  }}
+                </Form.List>
+              </Panel>
+            </Collapse>
+          </Form>
+        </Modal>
       </Content>
     </>
   );

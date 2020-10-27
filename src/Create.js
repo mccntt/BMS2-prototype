@@ -94,7 +94,7 @@ export const Create = () => {
   );
 };
 
-const ChangeBasicInfoForm = ({ text }) => {
+export const ChangeBasicInfoForm = ({ text }) => {
   const onFinish = (values) => {
     console.log("Success:", values);
   };
@@ -178,13 +178,13 @@ const ChangeBasicInfoForm = ({ text }) => {
           <Radio value="NTD">NTD</Radio>
         </Radio.Group>
       </Form.Item>
-      <Form.Item {...tailLayout}>
+      {/* <Form.Item {...tailLayout}>
         <Link to="/edit">
           <Button type="primary" htmlType="submit">
             {text}
           </Button>
-        </Link>
-      </Form.Item>
+        </Link> */}
+      {/* </Form.Item> */}
     </Form>
   );
 };
