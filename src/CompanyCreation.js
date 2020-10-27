@@ -113,7 +113,7 @@ export const EditWithCompanyCreation = () => {
       <Breadcrumb style={{ margin: "16px 0" }}>
         <Breadcrumb.Item>BMS2</Breadcrumb.Item>
         <Breadcrumb.Item>
-          <Link to="/quotations">Quotation</Link>
+          <Link to="/BMS2-prototype/quotations">Quotation</Link>
         </Breadcrumb.Item>
         <Breadcrumb.Item>HKQ20200826-06-22</Breadcrumb.Item>
       </Breadcrumb>
@@ -140,7 +140,7 @@ export const EditWithCompanyCreation = () => {
                 </Popconfirm>
               </Tooltip>
               <Tooltip title="Back to List">
-                <Link to="/quotations">
+                <Link to="/BMS2-prototype/quotations">
                   <Button icon={<RollbackOutlined />}></Button>
                 </Link>
               </Tooltip>

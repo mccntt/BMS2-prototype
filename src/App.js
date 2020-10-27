@@ -91,22 +91,22 @@ export default function App() {
           </Sider>
           <Layout style={{ padding: "0 24px 24px", marginLeft: 200 }}>
             <Switch>
-              <Route path="/quotations" exact>
+              <Route path="/BMS2-prototype/quotations" exact>
                 <ListPage />
               </Route>
-              <Route path="/" exact>
+              <Route path="/BMS2-prototype" exact>
                 <ListPage />
               </Route>
-              <Route path="/create" exact>
+              <Route path="/BMS2-prototype/create" exact>
                 <Create />
               </Route>
-              <Route path="/edit" exact>
+              <Route path="/BMS2-prototype/edit" exact>
                 <Edit />
               </Route>
-              <Route path="/editBase" exact>
+              <Route path="/BMS2-prototype/editBase" exact>
                 <EditBase />
               </Route>
-              <Route path="/editBaseWithCompany" exact>
+              <Route path="/BMS2-prototype/editBaseWithCompany" exact>
                 <EditWithCompanyCreation />
               </Route>
             </Switch>
@@ -195,7 +195,7 @@ const QList = () => {
       <List.Item
         actions={[
           <Tooltip title="Edit">
-            <Link to="/edit">
+            <Link to="/BMS2-prototype/edit">
               <EditOutlined />
             </Link>
           </Tooltip>,
@@ -213,7 +213,7 @@ const QList = () => {
       >
         <List.Item.Meta
           // eslint-disable-next-line
-          title={<Link to="/edit">{item.number}</Link>}
+          title={<Link to="/BMS2-prototype/edit">{item.number}</Link>}
           description={`Amount: ${parser.format(item.amount)} · Sales: ${
             item.sales
           }`}
@@ -247,7 +247,7 @@ const ListPage = () => {
       <Breadcrumb style={{ margin: "16px 0" }}>
         <Breadcrumb.Item>BMS2</Breadcrumb.Item>
         <Breadcrumb.Item>
-          <Link to="/quotations">Quotation</Link>
+          <Link to="/BMS2-prototype/quotations">Quotation</Link>
         </Breadcrumb.Item>
         <Breadcrumb.Item>List</Breadcrumb.Item>
       </Breadcrumb>
@@ -303,7 +303,7 @@ const ListPage = () => {
           visible={displayModal}
           onOk={() => {
             setDisplayModal(false);
-            history.push("/edit");
+            history.push("/BMS2-prototype/edit");
           }}
           onCancel={() => {
             setDisplayModal(false);
